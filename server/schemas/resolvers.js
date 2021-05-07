@@ -30,6 +30,18 @@ const resolvers = {
             const token = signToken(user);
 
             return { token, user };
+        },
+
+        saveBook: async (parent, { input }, { user }) => {
+            if (context.user) {
+                return await User.findOneAndUpdate(
+                    { _id: user._id },
+                    { $addToSet: { savedBooks: input } },
+                    { new: true }
+                );
+            }
+
+            throw new AuthenticationError('You are not logged in.');
         }
     }
 };
