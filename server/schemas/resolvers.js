@@ -5,7 +5,10 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
         me: async (parent, args, context) => {
-            if (context.user) return User.find().select('-__v -password');
+            if (context.user) {
+                return await User.findOne({ _id: context.user._id})
+                    .select('-__v -password');
+            }
             else throw new AuthenticationError('You are not logged in.');
         }
     },
