@@ -42,6 +42,18 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You are not logged in.');
+        },
+
+        removeBook: async (parent, { bookId }, { user }) => {
+            if (user) {
+                return await User.findOneAndUpdate(
+                    { _id: user.id },
+                    { $pull: { savedBooks: { bookId: bookId } } },
+                    { new: true }
+                );
+            }
+
+            throw new AuthenticationError('You are not logged in.');
         }
     }
 };
