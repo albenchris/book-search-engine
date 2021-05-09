@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
@@ -63,7 +63,7 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await deleteBook({
+      await deleteBook({
         variables: { bookId }
       });
       // upon success, remove book's id from localStorage
